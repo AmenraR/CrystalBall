@@ -7,7 +7,9 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.FloatMath;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class CrystalBall extends Activity {
@@ -22,12 +24,25 @@ public class CrystalBall extends Activity {
 
         private final SensorEventListener sensorListener = new SensorEventListener(){
 
-        @override
+        @Override
         public void onSensorChanged (SensorEvent event){
 
-            float x = 
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+
+            previousAcceleration = currentAcceleration;
+            currentAcceleration = FloatMath.sqrt(x * x + y * y + z * z);
+            float delta = currentAcceleration - previousAcceleration;
+            acceleration = acceleration * 0.9f + delta;
+
+            if(acceleration > 18){
+                Toast toast = Toast.makeText(getApplication() , "Device Has Shaken" , Toast.LENGTH_SHORT);
+                toast.show();
+
+            }
     }
-        @override
+        @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy){
 
     }
@@ -53,10 +68,11 @@ public class CrystalBall extends Activity {
 
     @Override
     protected void onResume() {
-        super.onResume();
-    }
-    sensorManager.registerListener(sensorListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
 
+        super.onResume();
+
+        sensorManager.registerListener(sensorListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+    }
     @Override
     protected void onPause() {
         super.onPause();
