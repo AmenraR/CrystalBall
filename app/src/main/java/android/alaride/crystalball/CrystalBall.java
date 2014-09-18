@@ -11,7 +11,7 @@ import android.util.FloatMath;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+//this is including all of the functions in the activity class
 public class CrystalBall extends Activity {
 
     private TextView answerText;
@@ -25,8 +25,8 @@ public class CrystalBall extends Activity {
         private final SensorEventListener sensorListener = new SensorEventListener(){
 
         @Override
-        public void onSensorChanged (SensorEvent event){
-
+        public void onSensorChanged(SensorEvent event){
+        //getting the updated accelerometer status
             float x = event.values[0];
             float y = event.values[1];
             float z = event.values[2];
@@ -35,7 +35,7 @@ public class CrystalBall extends Activity {
             currentAcceleration = FloatMath.sqrt(x * x + y * y + z * z);
             float delta = currentAcceleration - previousAcceleration;
             acceleration = acceleration * 0.9f + delta;
-
+        //checks if the device has committed in a shake and displays a notification telling you it has been shaken.
             if(acceleration > 18){
                 Toast toast = Toast.makeText(getApplication() , "Device Has Shaken" , Toast.LENGTH_SHORT);
                 toast.show();
@@ -53,8 +53,8 @@ public class CrystalBall extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crystal_ball);
-
-        sensorManager = (SensorManager)getSystemService(Context.SEARCH_SERVICE);
+        //sets the settings of the sensor manager
+        sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         acceleration = 0.0f;
