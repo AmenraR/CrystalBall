@@ -6,12 +6,13 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.FloatMath;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//this is including all of the functions in the activity class
+
 public class CrystalBall extends Activity {
 
     private TextView answerText;
@@ -37,6 +38,9 @@ public class CrystalBall extends Activity {
             acceleration = acceleration * 0.9f + delta;
         //checks if the device has committed in a shake and displays a notification telling you it has been shaken.
             if(acceleration > 18){
+                MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.crystal_ball);
+                mediaPlayer.start();
+
                 Toast toast = Toast.makeText(getApplication() , "Device Has Shaken" , Toast.LENGTH_SHORT);
                 toast.show();
 
