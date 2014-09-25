@@ -41,8 +41,8 @@ public class CrystalBall extends Activity {
                 MediaPlayer mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.crystal_ball);
                 mediaPlayer.start();
 
-                Toast toast = Toast.makeText(getApplication() , "Device Has Shaken" , Toast.LENGTH_SHORT);
-                toast.show();
+                answerText = (TextView)findViewById(R.id.answerText);
+                answerText.setText(Predictions.get().getPrediction());
 
             }
     }
@@ -65,8 +65,6 @@ public class CrystalBall extends Activity {
         currentAcceleration = SensorManager.GRAVITY_EARTH;
         previousAcceleration = SensorManager.GRAVITY_EARTH;
 
-        answerText = (TextView)findViewById(R.id.answerText);
-        answerText.setText(Predictions.get().getPrediction());
 
     }
 
